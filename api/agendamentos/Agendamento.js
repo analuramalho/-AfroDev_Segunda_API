@@ -1,4 +1,7 @@
 const TabelaAgendamento = require('./TabelaAgendamento')
+const CampoInvalido = require('../errors/CampoInvalido');
+const DadosNaoInformados = require('../errors/DadosNaoInformados');
+const NaoEncontrado = require('../errors/NaoEncontrado');
 
 class Agendamento{
     constructor({
@@ -20,6 +23,7 @@ class Agendamento{
     }
 
     async criar(){
+        this.validar()
         const result = await TabelaAgendamento.adicionar({
             nome_cliente: this.nome_cliente,
             nome_servico:this.nome_servico,
@@ -33,6 +37,9 @@ class Agendamento{
 
     async buscar(){
         const result = await TabelaAgendamento.buscarPorPk(this.id)
+        if(!result) {
+            throw new NaoEncontrado()
+        }
         this.nome_cliente = result.nome_cliente
         this.nome_servico = result.nome_servico
         this.status = result.status
@@ -57,8 +64,23 @@ class Agendamento{
             }
         });
 
+        if(Object.keys(dadosAtualizar).length === 0) {
+            throw new DadosNaoInformados()
+        }
+
         await TabelaAgendamento.atualizar(this.id, dadosAtualizar);
     } 
+
+    validar() {
+        const camposObrigatorios = ['nome_cliente', 'nome_servico', 'status', 'data_agendamento']
+
+        camposObrigatorios.forEach((campo) => {
+            const valor = this[campo];
+            if(typeof valor !== 'string' || valor.length === 0) {
+               throw new CampoInvalido(campo)
+            }
+        });
+    }
 }
 
 module.exports = Agendamento

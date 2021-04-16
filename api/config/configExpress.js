@@ -8,6 +8,7 @@ const NaoEncontrado = require('../errors/NaoEncontrado');
 const CampoInvalido = require('../errors/CampoInvalido');
 const SerializarError = require('../Serializar').SerializarError;
 const DadosNaoInformados = require('../errors/DadosNaoInformados');
+const passport = require('../usuarios/autenticacao')
 
 module.exports = () => {
     const app = express()

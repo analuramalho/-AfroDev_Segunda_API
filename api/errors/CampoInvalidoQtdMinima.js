@@ -7,4 +7,4 @@ class CampoInvalidoQtdMinima extends Error{
     }
 }
 
-module.exports = new CampoInvalidoQtdMinima
+module.exports = CampoInvalidoQtdMinima

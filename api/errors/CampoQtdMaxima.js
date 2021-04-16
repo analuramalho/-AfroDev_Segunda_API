@@ -7,4 +7,4 @@ class CampoQtdMaxima extends Error {
     }
 }
 
-module.exports = new CampoQtdMaxima
+module.exports =  CampoQtdMaxima

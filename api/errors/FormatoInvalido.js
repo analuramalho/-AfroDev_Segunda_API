@@ -7,4 +7,4 @@ class FormatoInvalido extends Error {
     }
 }
 
-module.exports = new FormatoInvalido
+module.exports = FormatoInvalido

@@ -7,4 +7,4 @@ class DadosNaoInformados extends Error{
     }
 }
 
-module.exports = new DadosNaoInformados
+module.exports = DadosNaoInformados

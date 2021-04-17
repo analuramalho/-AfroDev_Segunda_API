@@ -1,9 +1,9 @@
-const TabelaUsuario = require('./TabelaUsuario')
-const CampoInvalido = require('../errors/CampoInvalido')
-const CampoQtdMinima = require('../errors/CampoInvalidoQtdMinima')
-const CampoQtdMaxima = require('../errors/CampoQtdMaxima')
-const NaoEncontrado = require('../errors/NaoEncontrado')
-const DadosNaoInformados = require('../errors/DadosNaoInformados')
+const TabelaUsuario = require('../../models/usuarios/TabelaUsuario')
+const CampoInvalido = require('../../errors/CampoInvalido')
+const CampoQtdMinima = require('../../errors/CampoInvalidoQtdMinima')
+const CampoQtdMaxima = require('../../errors/CampoQtdMaxima')
+const NaoEncontrado = require('../../errors/NaoEncontrado')
+const DadosNaoInformados = require('../../errors/DadosNaoInformados')
 const bcrypt = require('bcrypt')
 
 class Usuario{
@@ -51,16 +51,18 @@ class Usuario{
         this.data_atualizacao = result.data_atualizacao
     }
 
-    async buscarPorEmail(){
-        const result = await TabelaUsuario.buscarPorEmail(this.email)
+    async buscarPorEmail() {
+        const result = await TabelaUsuario.buscarPorEmail(this.email);
+
         if(!result){
-            throw new NaoEncontrado('Usuario')
+            throw new NaoEncontrado('Usuário')
         }
-        this.id = result.id
-        this.nome = result.nome
-        this.senha = result.senha
-        this.data_criacao = result.data_criacao
-        this.data_atualizacao = result.data_atualizacao
+
+        this.id = result.id;
+        this.nome = result.nome;
+        this.senha = result.senha;
+        this.data_criacao = result.data_criacao;
+        this.data_atualizacao = result.data_atualizacao;
     }
 
     async atualizar(){
@@ -77,6 +79,7 @@ class Usuario{
             if(typeof valor === 'string' && valor.length>0){
                 dadosAtualizar[campo] = valor
             }
+
         })
 
         if(Object.keys(dadosAtualizar).length ===0 ){
@@ -84,7 +87,6 @@ class Usuario{
         }
 
         this.validar()
-
         await UsuarioController.atualizar(this.id,dadosAtualizar)
     }
 

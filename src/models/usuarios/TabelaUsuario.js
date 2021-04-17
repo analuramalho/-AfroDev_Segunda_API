@@ -27,7 +27,7 @@ module.exports = {
         }
     },
 
-    async buscarPorEmail(){
+    async buscarPorEmail(email){
         try {
             return await modeloUsuario.findOne({
                 where:{
